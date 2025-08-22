@@ -11,4 +11,3 @@ COPY index.php /var/www/html/
 EXPOSE 80
 
 # Server akan otomatis dijalankan oleh Apache
-```
