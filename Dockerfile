@@ -3,7 +3,7 @@
 FROM php:8.2-apache
 
 # Salin file PHP ke direktori web
-COPY index2.php /var/www/html/
+COPY . /var/www/html/
 
 # (Opsional) Tambahkan ekstensi PHP jika diperlukan
 # RUN docker-php-ext-install mysqli pdo pdo_mysql
