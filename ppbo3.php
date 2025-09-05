@@ -1,38 +1,19 @@
-<?php 
-class persegipanjang {
-    //property
-    public$panjang;
-    public$lebar;
-    
-    public function_contruct ($panjang, $lebar) {
-        $this->lebar = $lebar;
-        $this->panjang = $panjang;
-    }
-    public function luas(){
-        return $this-> panjang * $this->lebar;
-    } 
-    
-    public function keliling(){
-        return $this-> 2* ($this->panjang + $this ->lebar);
-    
-    $pp= persegipanjang(8, 5);
-    echo "Luas Persegi Panjang: " . $pp->luas() ."\n";
-    echo "Keliling Persegi Panjang: " . $pp->keliling() . "\n"
-    } 
+<?php
 
 class product {
-    public $nama;
-    public $harga;
-    public $stok;
+    private $nama;
+    private $harga;
+    private $stok;
 
-    public function_contruct ($panjang, $lebar) {
+    public function __construct ($nama, $harga, $stok) {
         $this->nama = $nama;
         $this->harga = $harga;
         $this->stok = $stok;
     }
-    public fucntion tampilkaninfo() {
+
+    public function tampilkaninfo() {
         echo "Nama Produk: " . $this->nama ."\n";
-        echo "Harga: " Rp . number_format($this->harga, 0, ',', '.') ."\n";
+        echo "Harga: Rp "  . number_format($this->harga, 0, ',', '.') ."\n";
         echo "Stok: " . $this->stok . "\n"; 
     }
 
