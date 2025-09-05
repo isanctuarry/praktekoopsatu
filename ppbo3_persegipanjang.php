@@ -1,5 +1,5 @@
 <?php 
-class persegipanjang {
+class PersegiPanjang {
     //property
     private $panjang;
     private $lebar;
@@ -8,6 +8,7 @@ class persegipanjang {
         $this->lebar = $lebar;
         $this->panjang = $panjang;
     }
+
     public function luas(){
         return $this->panjang * $this->lebar;
     } 
@@ -15,6 +16,7 @@ class persegipanjang {
     public function keliling(){
         return 2 * ($this->panjang + $this ->lebar);
     }
+}
 
 $pp = new PersegiPanjang(8, 5);
 echo "Luas Persegi Panjang: " . $pp->luas() . "\n";
