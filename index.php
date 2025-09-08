@@ -1,10 +1,11 @@
-<html>
-  <head>
-    <title>Tugas PPBO</title>
-  </head>
-  <body>
-    <h1>hi, selamat datang di tugas praktikum OOP 1</h1>
-    <?php echo '<p>coba pencet</p>'; ?> 
-    <a href="home.php">Home</a>
-  </body>
-</html>
+<?php
+include "classsegitiga.php";
+
+// Objek 1: Sama Kaki
+$segitiga1 = new Segitiga(10, 8, 6, 8, 6);
+$segitiga1->tampilkanInfo();
+
+// Objek 2: Sama Sisi
+$segitiga2 = new Segitiga(5, 4.33, 5, 5, 5);
+$segitiga2->tampilkanInfo();
+?>
