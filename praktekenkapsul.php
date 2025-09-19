@@ -56,7 +56,7 @@ echo $yamaha_yuda->tampilkan_jenismesin(); //“Yamaha CB JKT 48”
 class kendaraan
 {
   // property dengan hak akses private
-  private $jenis_mesin = "AKA 748 TURBO JET NUKLIR";
+  public $jenis_mesin = "AKA 748 TURBO JET NUKLIR";
   public function tampilkan_mesin()
   {
     return $this->jenis_mesin;

@@ -1,18 +1,34 @@
-<?php 
-class Mobil {
+<?php
 
+class mobil
+{
+    //Buat property untuk class mobil
     public $pemilik;
     public $merk;
-    public $warna;
-
-    public function hidupkan_mobil(): string {
-        return 'Hidupkan Mesin Mobil';
+    //Membuat method untuk class mobil
+    public function Hidupkan_mobil()
+    {
+        return "Hidupkan mobil $this->merk punya $this->pemilik";
     }
-
-    public function matikan_mobil(): string{
-        return 'Matikan Mesin Mobil';
+    public function Matikan_mobil()
+    {
+        return "Matikan mobil $this->merk punya $this->pemilik";
+    }
+    public function restart_mobil()
+    {
+        $matikan = $this->Matikan_mobil();
+        $hidupkan = $this->Hidupkan_mobil();
+        $hasil = $matikan . "<br>" . $hidupkan;
+        return $hasil;
     }
 }
-
-$mobil1 = new Mobil();
-echo $mobil1->hidupkan_mobil();
+//buat objek dari class mobil (instansiasi)
+$mobil_kucing = new mobil();
+//Isi property objek
+$mobil_kucing->pemilik = "Clawmark";
+$mobil_kucing->merk = "Jaguar";
+echo $mobil_kucing->Hidupkan_mobil();
+echo "\n";
+echo $mobil_kucing->Matikan_mobil();
+echo "\nHasil: ";
+echo $mobil_kucing->restart_mobil();
