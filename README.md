@@ -1,5 +1,5 @@
 ---
-title: Praktek OOP
+title: Praktek OOP (Daftar Praktikum)
 emoji: 👀
 colorFrom: blue
 colorTo: green
