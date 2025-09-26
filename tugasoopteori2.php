@@ -1,3 +1,104 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Log Sistem</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f9;
+      padding: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0 auto;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px 15px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #2c3e50;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    caption {
+      margin-bottom: 10px;
+      font-weight: bold;
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+<body>
+
+<table>
+  <caption>Log Aktivitas</caption>
+  <thead>
+    <tr>
+      <th>No</th>
+      <th>Pesan</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Buku 'White Nights' dengan ISBN 978-0-241-2508-6 berhasil dipinjam.</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>DVD 'KPop Demon Hunters' berdurasi 100 menit berhasil dipinjam.</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Majalah 'Black Tie Affair' edisi Summer/Spring berhasil dipinjam.</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>[LOG] Login berhasil.</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>[NOTIFIKASI] Selamat datang, Khairunnisa!</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>[LOG] Produk ditambahkan ke katalog.</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>Mencari data dengan kata kunci: 'DVD'</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>[LOG] Transaksi dibuat.</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>[NOTIFIKASI] Pembayaran berhasil.</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>Mencari data dengan kata kunci: 'TRX001'</td>
+    </tr>
+  </tbody>
+</table>
 <?php
 class ItemPerpustakaan {
     public $judul;
@@ -61,7 +162,7 @@ class Majalah extends ItemPerpustakaan {
 $buku = new Buku(judul: "White Nights", tahunTerbit: 1848, isbn: "978-0-241-2508-6 <br>") ;
 $buku->pinjam();
 
-$dvd = new DVD("KPop Demon Hunters", 2025, 100) ;
+$dvd = new DVD("KPop Demon Hunters", 2025, 100);
 $dvd->pinjam();
 
 $majalah = new Majalah("Black Tie Affair", 2023, "Summer/Spring <br>");
@@ -127,3 +228,5 @@ $transaksi->sendNotification("Pembayaran berhasil. <br>");
 $transaksi->search("TRX001 <br>");
 
 ?>
+</body>
+</html>
