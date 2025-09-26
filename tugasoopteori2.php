@@ -5,9 +5,10 @@
   <title>Log Sistem</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Times New Roman';
       background: #f4f4f9;
       padding: 20px;
+      align-items: center;
     }
 
     table {
@@ -15,11 +16,11 @@
       border-collapse: collapse;
       margin: 0 auto;
       background: #fff;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 8px rgba(73, 10, 86, 0.1);
     }
 
     th, td {
-      border: 1px solid #ddd;
+      border: 1px solid #efc7ffff;
       padding: 12px 15px;
       text-align: left;
     }
@@ -36,13 +37,15 @@
     }
 
     tr:hover {
-      background-color: #f1f1f1;
+      background-color: #a984c1ff;
     }
 
     caption {
       margin-bottom: 10px;
       font-weight: bold;
       font-size: 1.2em;
+      font-family: 'Times New Roman';
+      align-items: center;
     }
   </style>
 </head>
@@ -213,20 +216,6 @@ class Transaksi {
         $this->idTransaksi = $idTransaksi;
     }
 }
-
-$pengguna = new Pengguna("Khairunnisa <br>");
-$pengguna->logActivity("Login berhasil. <br>");
-$pengguna->sendNotification("Selamat datang, {$pengguna->nama}! <br>");
-
-$produk = new Produk("Enola Holmes <br>");
-$produk->logActivity("Produk ditambahkan ke katalog. <br>");
-$produk->search("DVD");
-
-$transaksi = new Transaksi("TRX001 <br>");
-$transaksi->logActivity("Transaksi dibuat. <br>");
-$transaksi->sendNotification("Pembayaran berhasil. <br>");
-$transaksi->search("TRX001 <br>");
-
 ?>
 </body>
 </html>
