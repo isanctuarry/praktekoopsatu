@@ -22,7 +22,7 @@
     th, td {
       border: 1px solid #efc7ffff;
       padding: 12px 15px;
-      text-align: left;
+      text-align: center;
     }
 
     th {
@@ -45,7 +45,7 @@
       font-weight: bold;
       font-size: 1.2em;
       font-family: 'Times New Roman';
-      align-items: center;
+      text-align: center;
     }
   </style>
 </head>
@@ -55,7 +55,6 @@
   <caption>Log Aktivitas</caption>
   <thead>
     <tr>
-      <th>No</th>
       <th>Pesan</th>
     </tr>
   </thead>
