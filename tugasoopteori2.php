@@ -61,7 +61,7 @@ class Majalah extends ItemPerpustakaan {
 $buku = new Buku(judul: "White Nights", tahunTerbit: 1848, isbn: "978-0-241-2508-6 <br>") ;
 $buku->pinjam();
 
-$dvd = new DVD("KPop Demon Hunters", 2025, 100 "<br>");
+$dvd = new DVD("KPop Demon Hunters", 2025, 100) ;
 $dvd->pinjam();
 
 $majalah = new Majalah("Black Tie Affair", 2023, "Summer/Spring <br>");
