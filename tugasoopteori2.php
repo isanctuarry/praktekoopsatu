@@ -58,13 +58,13 @@ class Majalah extends ItemPerpustakaan {
     }
 }
 
-$buku = new Buku(judul: "White Nights", tahunTerbit: 1848, isbn: "978-0-241-2508-6");
+$buku = new Buku(judul: "White Nights", tahunTerbit: 1848, isbn: "978-0-241-2508-6 <br>") ;
 $buku->pinjam();
 
-$dvd = new DVD("KPop Demon Hunters", 2025, 100);
+$dvd = new DVD("KPop Demon Hunters", 2025, 100 "<br>");
 $dvd->pinjam();
 
-$majalah = new Majalah("Black Tie Affair", 2023, "Summer/Spring");
+$majalah = new Majalah("Black Tie Affair", 2023, "Summer/Spring <br>");
 $majalah->pinjam();
 
 
@@ -113,17 +113,17 @@ class Transaksi {
     }
 }
 
-$pengguna = new Pengguna("Khairunnisa");
-$pengguna->logActivity("Login berhasil.");
-$pengguna->sendNotification("Selamat datang, {$pengguna->nama}!");
+$pengguna = new Pengguna("Khairunnisa <br>");
+$pengguna->logActivity("Login berhasil. <br>");
+$pengguna->sendNotification("Selamat datang, {$pengguna->nama}! <br>");
 
-$produk = new Produk("Enola Holmes");
-$produk->logActivity("Produk ditambahkan ke katalog.");
+$produk = new Produk("Enola Holmes <br>");
+$produk->logActivity("Produk ditambahkan ke katalog. <br>");
 $produk->search("DVD");
 
-$transaksi = new Transaksi("TRX001");
-$transaksi->logActivity("Transaksi dibuat.");
-$transaksi->sendNotification("Pembayaran berhasil.");
-$transaksi->search("TRX001");
+$transaksi = new Transaksi("TRX001 <br>");
+$transaksi->logActivity("Transaksi dibuat. <br>");
+$transaksi->sendNotification("Pembayaran berhasil. <br>");
+$transaksi->search("TRX001 <br>");
 
 ?>
