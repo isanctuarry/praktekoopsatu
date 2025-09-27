@@ -24,6 +24,8 @@
         //Polimorfusme
         interface BangunDatar {
             public function luas();
+            public function namaBD();
+            public function infoBD();
         }
 
         class Persegi implements BangunDatar {
@@ -40,21 +42,28 @@
             public function namaBD() {
                 return "Persegi";
             }
-        }
 
+            public function infoBD() {
+                return "Sisi = " . $this->sisi;
+            }
+        }
         class Lingkaran implements BangunDatar {
             private $jari2;
 
             public function __construct($jari2) {
                 $this->jari2 = $jari2;
             }
-
+        
             public function luas() {
                 return pi() * $this->jari2 * $this->jari2;
             }
 
             public function namaBD() {
                 return "Lingkaran";
+            }
+
+            public function infoBD() {
+                return "Jari-jari = " . $this->jari2;
             }
         }
         
