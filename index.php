@@ -3,6 +3,7 @@
 $latihan = [
     "praktikumlima.php"=> "Tugas Praktikum 5",
     "tugasoopteori2.php" => "Tugas 2 Teori",
+    "tugasoopteori3.php" => "Tugas 3 Teori",
     "praktikumlima2.php"=> "Tugas Praktikum 5 pt 2",
     "praktikum6.php" => "Tugas Praktikum 6",
 ];
