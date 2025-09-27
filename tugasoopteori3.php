@@ -56,7 +56,7 @@
         ];
 
         foreach ($bangunDatar as $BD) {
-            echo "Luas: ". $BD->luas() . "<br> <br>";
+            echo "Luas: ". $BD->luas() . "<br><br>";
         }
     
 
