@@ -36,6 +36,10 @@
             public function luas() {
                 return $this->sisi * $this->sisi;
             }
+
+            public function namaBD() {
+                return "Persegi";
+            }
         }
 
         class Lingkaran implements BangunDatar {
@@ -48,6 +52,10 @@
             public function luas() {
                 return $this->jari2 * $this->jari2;
             }
+
+            public function namaBD() {
+                return "Lingkaran";
+            }
         }
         
         $bangunDatar = [
@@ -56,7 +64,7 @@
         ];
 
         foreach ($bangunDatar as $BD) {
-            echo "Luas: ". $BD->luas() . "<br><br>";
+            echo "Luas ". $BD->namaBD() . "=" . $BD->luas() . "<br><br>";
         }
     
 
