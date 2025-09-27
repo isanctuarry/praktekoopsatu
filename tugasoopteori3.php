@@ -73,8 +73,9 @@
         ];
 
         foreach ($bangunDatar as $BD) {
-            echo "Luas ". $BD->namaBD() . "=" . $BD->luas() . "<br><br>";
-        }
+            echo $BD->namaBD() . " (" . $BD->infoBD() . ") → Luas = " 
+                . number_format($BD->luas(), 2) . "<br><br>";
+}
     
 
 
