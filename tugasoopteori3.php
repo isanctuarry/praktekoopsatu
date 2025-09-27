@@ -50,7 +50,7 @@
             }
 
             public function luas() {
-                return $this->jari2 * $this->jari2;
+                return pi() * $this->jari2 * $this->jari2;
             }
 
             public function namaBD() {
