@@ -43,6 +43,11 @@ abstract class Hewan {
         }
         throw new \BadMethodCallException("Method '$name' tidak ada.");
     }
+
+    public function getRas(): string {
+    return $this->ras;
+    }
+
     
     // Abstract method harus di-override di kelas turunan
     abstract public function bersuara(): string;

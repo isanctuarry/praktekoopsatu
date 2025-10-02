@@ -74,7 +74,7 @@ try {
     // $anjingInvalid = new Anjing("Bayi", 0, "Ras A", "Rendah"); 
 
     // 14. Penerapan CRUD
-    $manajemen->buat(['nama' => $anjing2->nama, 'ras' => $anjing2->ras, 'energi' => $anjing2->tampilkanEnergi()]);
+    $manajemen->buat(['nama' => $anjing2->nama, 'ras' => $anjing2->getRas(), 'energi' => $anjing2->tampilkanEnergi()]);
     $dataAdopsi = $manajemen->baca(1);
     echo "Data Adopsi ID 1: " . ($dataAdopsi ? $dataAdopsi['nama'] : 'Tidak ada') . "\n";
     $manajemen->perbarui(1, ['status_adopsi' => 'Diadopsi']);
