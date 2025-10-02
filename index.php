@@ -6,6 +6,7 @@ $latihan = [
     "tugasoopteori3.php" => "Tugas 3 Teori",
     "praktikumlima2.php"=> "Tugas Praktikum 5 pt 2",
     "praktikum6.php" => "Tugas Praktikum 6",
+    "petadoption.php"=> "Praktikum 7: Pet Adoption",
 ];
 ?>
 
