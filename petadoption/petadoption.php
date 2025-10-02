@@ -1,3 +1,21 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistem Adopsi Hewan OOP PHP</title>
+    <link rel="stylesheet" href="petstyle.css"> 
+</head>
+<body>
+<div class="container">
+    <h1>Pets</h1>
+    </div>
+<div class="header">
+    <h1>Adopt a Bit</h1>
+    <p>Cute pets are waiting for you!</p>
+</div>
+</body>
+</html>
+
 <?php
 // File: petadoption.php
 
@@ -32,9 +50,8 @@ use AdopsiHewan\Models\Anjing;
 use AdopsiHewan\Controllers\ManajemenAdopsi;
 use AdopsiHewan\Utilities\Reflektor;
 
-// ----------------------------------------------------
+
 // IMPLEMENTASI
-// ----------------------------------------------------
 
 // 18. Dependency Injection (lanjutan)
 $reflector = new Reflektor();
