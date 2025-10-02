@@ -1,11 +1,19 @@
-<?php
-// Autoloading Sederhana (PSR-4)
+<<?php
+// File: petadoption.php
+
 // 13. Namespaces & Autoloading: namespace dan spl_autoload_register
 spl_autoload_register(function ($class) {
-    // Ganti separator namespace menjadi separator direktori
-    $file = str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
-    // Hapus 'AdopsiHewan\' dan tambahkan 'src/'
-    $file = str_replace('AdopsiHewan' . DIRECTORY_SEPARATOR, 'src' . DIRECTORY_SEPARATOR, $file);
+    
+    // 1. Dapatkan direktori dasar tempat file petadoption.php berada, lalu masuk ke folder 'src/'
+    $base_dir = __DIR__ . '/src/';
+
+    // 2. Hapus namespace root 'AdopsiHewan\' dari nama kelas
+    // Pastikan menggunakan double backslash '\\' untuk karakter \
+    $relative_class = str_replace('AdopsiHewan\\', '', $class);
+
+    // 3. Ubah separator namespace (\) menjadi separator direktori (/)
+    $file = $base_dir . str_replace('\\', '/', $relative_class) . '.php';
+
     
     if (file_exists($file)) {
         require_once $file;
