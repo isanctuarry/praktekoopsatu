@@ -1,5 +1,5 @@
 <?php
-// --- AUTOLOADER DAN USE STATEMENT (di bagian atas file) ---
+// --- AUTOLOADER DAN USE STATEMENT ---
 spl_autoload_register(function ($class) {
     
     $base_dir = __DIR__ . '/src/';
@@ -20,12 +20,8 @@ use AdopsiHewan\Controllers\ManajemenAdopsi;
 use AdopsiHewan\Utilities\Reflektor;
 use AdopsiHewan\Interfaces\CrudInterface;
 
-// Tangkap semua output (termasuk LOG dari Trait dan Refleksi) ke buffer
+// TANGKAP SEMUA OUTPUT DENGAN BUFFERING (ob_start() harus dipanggil di awal!)
 ob_start();
-
-// 18. Dependency Injection (lanjutan)
-$reflector = new Reflektor();
-$manajemen = new ManajemenAdopsi($reflector); 
 
 ?>
 <!DOCTYPE html>
@@ -42,6 +38,10 @@ $manajemen = new ManajemenAdopsi($reflector);
 
 <?php
 try {
+    // INISIALISASI DIPINDAHKAN KE SINI (Setelah ob_start)
+    $reflector = new Reflektor();
+    $manajemen = new ManajemenAdopsi($reflector); 
+    
     // 3. Magic Methods: __construct()
     $anjing1 = new Anjing("Bolt", 36, "Golden Retriever", "Tinggi");
     $anjing2 = new Anjing("Lassie", 12, "Border Collie", "Sedang");
@@ -55,6 +55,7 @@ try {
         echo "<strong>Umur (private via getter):</strong> " . $anjing1->getUmurTahun() . " tahun<br>";
         echo "<strong>Polymorphism (Suara):</strong> " . $anjing1->bersuara() . "<br>";
         echo "<strong>Magic Method __call():</strong> " . $anjing1->tampilkanStatus() . "<br>"; 
+        // Menggunakan <pre> untuk output multiline __toString()
         echo "<strong>Magic Method __toString():</strong> <pre>" . $anjing1 . "</pre>"; 
         ?>
     </div>
@@ -113,7 +114,7 @@ try {
     
     <?php
 } catch (\InvalidArgumentException $e) {
-
+    // --- 5. EXCEPTION HANDLING ---
     ?>
     <h2>5. Exception Handling (ERROR)</h2>
     <div class="result-block error-block">
@@ -122,7 +123,8 @@ try {
     <?php
 }
 
-$log_output = ob_get_clean();
+// --- TANGKAP DAN TAMPILKAN LOG & REFLEKSI DI BAGIAN AKHIR ---
+$log_output = ob_get_clean(); // Mengakhiri buffering dan mendapatkan output
 $log_entries = explode("\n", $log_output);
 ?>
 
@@ -131,7 +133,7 @@ $log_entries = explode("\n", $log_output);
     <?php
     foreach ($log_entries as $entry) {
         if (trim($entry) !== '') {
-    
+            // Ini akan membungkus setiap baris Log/Refleksi ke dalam div terpisah
             echo "<div class='log-entry'>" . htmlspecialchars($entry) . "</div>";
         }
     }
