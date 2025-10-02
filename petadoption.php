@@ -1,20 +1,28 @@
-<<?php
+<?php
 // File: petadoption.php
 
-// 13. Namespaces & Autoloading: namespace dan spl_autoload_register
 spl_autoload_register(function ($class) {
     
-    // 1. Dapatkan direktori dasar tempat file petadoption.php berada, lalu masuk ke folder 'src/'
+    // 1. Definisikan jalur dasar (base directory)
+    // __DIR__ adalah C:\SISTEM INFORMASI\...\praktikoopspatu\
     $base_dir = __DIR__ . '/src/';
 
-    // 2. Hapus namespace root 'AdopsiHewan\' dari nama kelas
-    // Pastikan menggunakan double backslash '\\' untuk karakter \
+    // 2. Hapus namespace root 'AdopsiHewan\'
+    // Hasil: Utilities\Reflektor
     $relative_class = str_replace('AdopsiHewan\\', '', $class);
 
-    // 3. Ubah separator namespace (\) menjadi separator direktori (/)
-    $file = $base_dir . str_replace('\\', '/', $relative_class) . '.php';
+    // 3. Ubah semua backslash (\) menjadi slash (/)
+    // Hasil: Utilities/Reflektor
+    $file_path = str_replace('\\', '/', $relative_class);
 
+    // 4. Gabungkan base_dir, path, dan ekstensi
+    // Hasil: C:\SISTEM INFORMASI\...\praktikoopspatu/src/Utilities/Reflektor.php
+    $file = $base_dir . $file_path . '.php';
     
+    // Cek path yang dicari oleh PHP di Windows
+    // echo "Mencari file: " . $file . "\n"; 
+    // die; 
+
     if (file_exists($file)) {
         require_once $file;
     }
