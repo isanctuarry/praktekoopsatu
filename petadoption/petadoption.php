@@ -1,5 +1,5 @@
 <?php
-
+// --- AUTOLOADER DAN USE STATEMENT (Harus di bagian atas file) ---
 spl_autoload_register(function ($class) {
     
     $base_dir = __DIR__ . '/src/';
@@ -33,113 +33,74 @@ use AdopsiHewan\Interfaces\CrudInterface;
     <h1>Adopt a Bit</h1>
     <p>Cute pets are waiting for you!</p>
 
-    <?php
-    // --- IMPLEMENTASI & OUTPUT DIMULAI ---
+    <pre>
+<?php
+
+$reflector = new Reflektor();
+$manajemen = new ManajemenAdopsi($reflector); 
+
+try {
+    $anjing1 = new Anjing("Bolt", 36, "Golden Retriever", "Tinggi");
+    $anjing2 = new Anjing("Lassie", 12, "Border Collie", "Sedang");
+
+    echo "--- DETAIL HEWAN ---\n";
+    echo "Nama Anjing 1 (public): " . $anjing1->nama . "\n";
+    echo "Umur Anjing 1 (private via method): " . $anjing1->getUmurTahun() . " tahun\n";
     
-    // Tangkap semua output (termasuk LOG dari Trait dan Refleksi) ke buffer
-    ob_start();
+    echo $anjing1->bersuara() . "\n";
+    
+    echo $anjing1->tampilkanStatus() . "\n"; 
+    
+    echo "Detail: " . $anjing1 . "\n"; 
+    
+    echo "Status Default (Constant): " . Anjing::STATUS_ADOP . "\n";
+    
+    echo $anjing1->tampilkanEnergi() . "\n";
+    
+    echo "Kategori Hewan (Static::class): " . Anjing::getKategori() . "\n";
 
-    // 18. Dependency Injection (lanjutan)
-    $reflector = new Reflektor();
-    $manajemen = new ManajemenAdopsi($reflector); 
+    $manajemen->buat(['nama' => $anjing2->nama, 'ras' => $anjing2->getRas(), 'energi' => $anjing2->tampilkanEnergi()]);
+    $dataAdopsi = $manajemen->baca(1);
+    echo "Data Adopsi ID 1: " . ($dataAdopsi ? $dataAdopsi['nama'] : 'Tidak ada') . "\n";
+    $manajemen->perbarui(1, ['status_adopsi' => 'Diadopsi']);
+    echo "Status Baru ID 1: " . $manajemen->baca(1)['status_adopsi'] . "\n";
+    $manajemen->hapus(1);
 
-    try {
-        // 3. Magic Methods: __construct()
-        $anjing1 = new Anjing("Bolt", 36, "Golden Retriever", "Tinggi");
-        $anjing2 = new Anjing("Lassie", 12, "Border Collie", "Sedang");
+    $anjing3 = clone $anjing1;
+    $anjing3->nama = "Duplikat Bolt"; 
+    echo "Anjing 3 Nama: " . $anjing3->nama . "\n";
 
-        // --- 1. DETAIL HEWAN & MAGIC METHODS ---
-        ?>
-        <h2>1. Detail Hewan, Encapsulation & Magic Methods</h2>
-        <div class="result-block">
-            <?php
-            echo "<strong>Nama (public):</strong> " . $anjing1->nama . "<br>";
-            echo "<strong>Umur (private via getter):</strong> " . $anjing1->getUmurTahun() . " tahun<br>";
-            echo "<strong>Polymorphism (Suara):</strong> " . $anjing1->bersuara() . "<br>";
-            echo "<strong>Magic Method __call():</strong> " . $anjing1->tampilkanStatus() . "<br>"; 
-            echo "<strong>Magic Method __toString():</strong> <pre>" . $anjing1 . "</pre>"; 
-            ?>
-        </div>
-
-        <h2>2. Constants, Final Keyword & Static Binding</h2>
-        <div class="result-block">
-            <?php
-            echo "<strong>Class Constants:</strong> Status Default: " . Anjing::STATUS_ADOP . "<br>";
-            echo "<strong>Final Function:</strong> Tingkat Energi: " . $anjing1->tampilkanEnergi() . "<br>";
-            echo "<strong>Static Binding:</strong> Kategori: " . Anjing::getKategori() . "<br>";
-            ?>
-        </div>
-
-        <h2>3. Penerapan CRUD (Interface)</h2>
-        <div class="result-block">
-            <?php
-            $manajemen->buat(['nama' => $anjing2->nama, 'ras' => $anjing2->getRas(), 'energi' => $anjing2->tampilkanEnergi()]);
-            $dataAdopsi = $manajemen->baca(1);
-            echo "<strong>Data Adopsi ID 1 Dibaca:</strong> " . ($dataAdopsi ? $dataAdopsi['nama'] : 'Tidak ada') . "<br>";
-            $manajemen->perbarui(1, ['status_adopsi' => 'Diadopsi']);
-            echo "<strong>Status Baru ID 1:</strong> " . $manajemen->baca(1)['status_adopsi'] . "<br>";
-            $manajemen->hapus(1);
-            echo "Data Adopsi ID 1 Dihapus.<br>";
-            ?>
-        </div>
-
-        <h2>4. Cloning, Iteration, Serialization & Anonymous Class</h2>
-        <div class="result-block">
-            <?php
-            $anjing3 = clone $anjing1;
-            $anjing3->nama = "Duplikat Bolt";
-            echo "<strong>Cloning Object:</strong> Anjing 3 Nama: " . $anjing3->nama . "<br>";
-
-            echo "<strong>Object Iteration (Properti Publik):</strong><pre>";
-            foreach ($anjing2 as $key => $value) {
-                if (is_string($value)) {
-                    echo "{$key}: {$value}\n";
-                }
-            }
-            echo "</pre>";
-
-            $serializedAnjing = serialize($anjing2);
-            echo "Objek Anjing 2 diserialisasi.<br>";
-            $unserializedAnjing = unserialize($serializedAnjing);
-            echo "Objek Anjing 2 diunserialisasi: <strong>" . $unserializedAnjing->nama . "</strong><br>";
-
-            $emailSender = new class implements CrudInterface {
-                public function buat(array $data): void { echo "<strong>Anonymous Class:</strong> AC: Mengirim email konfirmasi...\n"; }
-                public function baca(int $id): ?array { return null; }
-                public function perbarui(int $id, array $data): bool { return false; }
-                public function hapus(int $id): bool { return false; }
-            };
-            $emailSender->buat(['penerima' => 'adopter@example.com']);
-            ?>
-        </div>
-        
-        <?php
-    } catch (\InvalidArgumentException $e) {
-        // --- 5. EXCEPTION HANDLING ---
-        ?>
-        <h2>5. Exception Handling (ERROR)</h2>
-        <div class="result-block error-block">
-            <?php echo "ERROR: <pre>" . htmlspecialchars($e->getMessage()) . "</pre>"; ?>
-        </div>
-        <?php
-    }
-
-    // --- TANGKAP DAN TAMPILKAN LOG & REFLEKSI DI BAGIAN AKHIR ---
-    $log_output = ob_get_clean();
-    $log_entries = explode("\n", $log_output);
-    ?>
-
-    <h2>5. Log (Trait) & Reflection Output</h2>
-    <div class="result-block log-block">
-        <?php
-        foreach ($log_entries as $entry) {
-            if (trim($entry) !== '') {
-                echo "<div class='log-entry'>" . htmlspecialchars($entry) . "</div>";
-            }
+    echo "--- ITERASI PROPERTI PUBLIK ANJING 2 ---\n";
+    foreach ($anjing2 as $key => $value) {
+        if (is_string($value)) {
+            echo "{$key}: {$value}\n";
         }
-        ?>
-    </div>
+    }
+    echo "----------------------------------------\n";
 
+    $serializedAnjing = serialize($anjing2);
+    echo "Objek Anjing 2 diserialisasi.\n";
+    
+    $unserializedAnjing = unserialize($serializedAnjing);
+    echo "Objek Anjing 2 diunserialisasi: " . $unserializedAnjing->nama . "\n";
+
+    $emailSender = new class implements CrudInterface {
+        public function buat(array $data): void { echo "AC: Mengirim email konfirmasi...\n"; }
+        public function baca(int $id): ?array { return null; }
+        public function perbarui(int $id, array $data): bool { return false; }
+        public function hapus(int $id): bool { return false; }
+    };
+
+    $emailSender->buat(['penerima' => 'adopter@example.com']);
+    
+} catch (\InvalidArgumentException $e) {
+    echo "\n\n--- ERROR ---\n";
+    echo "ERROR: " . $e->getMessage() . "\n";
+}
+// Tidak ada tag penutup ?> di sini, karena kode PHP berlanjut sampai akhir file.
+// Ini memastikan semua output terkirim sebelum </body>
+?>
+    </pre>
 </div>
 </body>
 </html>
