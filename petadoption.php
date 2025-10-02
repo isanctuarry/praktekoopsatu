@@ -1,257 +1,103 @@
 <?php
-
-// 12. Namespace dan Autoloading
-namespace AnimalAdoption;
-
+// Autoloading Sederhana (PSR-4)
+// 13. Namespaces & Autoloading: namespace dan spl_autoload_register
 spl_autoload_register(function ($class) {
-    include __DIR__ . '/' . str_replace('\\', '/', $class) . '.php';
+    // Ganti separator namespace menjadi separator direktori
+    $file = str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
+    // Hapus 'AdopsiHewan\' dan tambahkan 'src/'
+    $file = str_replace('AdopsiHewan' . DIRECTORY_SEPARATOR, 'src' . DIRECTORY_SEPARATOR, $file);
+    
+    if (file_exists($file)) {
+        require_once $file;
+    }
 });
 
-// 2. Encapsulation: class Animal dengan properties private/protected dan method akses
-class Animal {
-    // 3. Magic Method
-    protected $name;
-    protected $age;
-    protected $type;
-    protected $id;
+use AdopsiHewan\Models\Anjing;
+use AdopsiHewan\Controllers\ManajemenAdopsi;
+use AdopsiHewan\Utilities\Reflektor;
 
-    const SPECIES = "Animal"; // 5. Class Constant
+// ----------------------------------------------------
+// IMPLEMENTASI
+// ----------------------------------------------------
 
-    public function __construct($id, $name, $age, $type) {
-        $this->id = $id;
-        $this->name = $name;
-        $this->age = $age;
-        $this->type = $type;
-    }
+// 18. Dependency Injection (lanjutan)
+$reflector = new Reflektor();
+$manajemen = new ManajemenAdopsi($reflector); 
+// Output refleksi dari ManajemenAdopsi muncul di sini
 
-    public function getName() { return $this->name; }
-    public function setName($name) { $this->name = $name; }
-
-    public function __toString() {
-        return "{$this->type} - {$this->name}, Age: {$this->age}";
-    }
-}
-
-// 1. Scope: public, private, protected
-class Dog extends Animal {
-    private $breed;
-
-    public function __construct($id, $name, $age, $breed) {
-        parent::__construct($id, $name, $age, "Dog");
-        $this->breed = $breed;
-    }
-
-    // 4. Inheritance & override method
-    public function __toString() {
-        return parent::__toString() . ", Breed: {$this->breed}";
-    }
-}
-
-// 10. Trait (Reusable methods)
-trait AdoptableTrait {
-    private $adopted = false;
-    private $adopterName;
-
-    public function adopt($adopterName) {
-        if ($this->adopted) {
-            throw new \Exception("Animal already adopted.");
-        }
-        $this->adopted = true;
-        $this->adopterName = $adopterName;
-    }
-
-    public function isAdopted(): bool {
-        return $this->adopted;
-    }
-
-    public function getAdopterName() {
-        return $this->adopterName;
-    }
-}
-
-// 6. Late Static Binding Example
-class AnimalShelter {
-    public static function createAnimal($id, $name, $age) {
-        return new static($id, $name, $age);
-    }
-}
-
-class Cat extends AnimalShelter {
-    public static function createAnimal($id, $name, $age) {
-        return new CatAnimal($id, $name, $age);
-    }
-}
-
-class CatAnimal extends Animal {
-    use AdoptableTrait;
-
-    public function __construct($id, $name, $age) {
-        parent::__construct($id, $name, $age, "Cat");
-    }
-}
-
-// 11. Polymorphism: Interface dan Abstract class
-interface SoundInterface {
-    public function makeSound(): string;
-}
-
-abstract class AnimalSound extends Animal {
-    abstract public function makeSound(): string;
-}
-
-class DogSound extends Dog implements SoundInterface {
-    public function makeSound(): string {
-        return "Woof!";
-    }
-}
-
-class CatSound extends CatAnimal implements SoundInterface {
-    public function makeSound(): string {
-        return "Meow!";
-    }
-}
-
-// 7. Final Keyword and Method - class tidak bisa diturunkan
-final class Shelter {
-    private $animals = [];
-
-    public function addAnimal(Animal $animal) {
-        $this->animals[$animal->getName()] = $animal;
-    }
-
-    public function adoptAnimal($name, $adopterName) {
-        if (!isset($this->animals[$name])) {
-            throw new \Exception("Animal not found");
-        }
-        if (method_exists($this->animals[$name], 'adopt')) {
-            $this->animals[$name]->adopt($adopterName);
-        } else {
-            throw new \Exception("Animal not adoptable");
-        }
-    }
-
-    public function listAnimals() {
-        foreach($this->animals as $animal) {
-            echo $animal . ($animal instanceof AdoptableTrait && $animal->isAdopted() ? " - Adopted by: " . $animal->getAdopterName() : "") . PHP_EOL;
-        }
-    }
-}
-
-// 8. Type Hinting & Union Type (PHP 8+)
-function printAnimalInfo(AnimalSound|DogSound $animal): void {
-    echo $animal . " Sound: " . $animal->makeSound() . PHP_EOL;
-}
-
-// 9. Exception Handling
 try {
-    $shelter = new Shelter();
+    // 3. Magic Methods: __construct()
+    $anjing1 = new Anjing("Bolt", 36, "Golden Retriever", "Tinggi");
+    $anjing2 = new Anjing("Lassie", 12, "Border Collie", "Sedang");
+
+    echo "--- Detail Hewan ---\n";
+    // 1. Scope (public property)
+    echo "Nama Anjing 1 (public): " . $anjing1->nama . "\n";
+    // 2. Encapsulation (via getter)
+    echo "Umur Anjing 1 (private via method): " . $anjing1->getUmurTahun() . " tahun\n";
     
-    $dog = new DogSound(1, "Buddy", 3, "Golden Retriever");
-    $cat = new CatSound(2, "Whiskers", 2);
-
-    // Add animals
-    $shelter->addAnimal($dog);
-    $shelter->addAnimal($cat);
-
-    // 16. Object Iterator (foreach digunakan untuk iterasi di shelter)
-    foreach([$dog, $cat] as $animal) {
-        printAnimalInfo($animal);
-    }
-
-    // Adopt animal
-    $shelter->adoptAnimal("Whiskers", "John Doe");
+    // 11. Polymorphism (override abstract method bersuara)
+    echo $anjing1->bersuara() . "\n";
     
-    // List animals and adoption status
-    $shelter->listAnimals();
+    // 3. Magic Methods: __call()
+    echo $anjing1->tampilkanStatus() . "\n"; 
+    
+    // 3. Magic Methods: __toString()
+    echo "Detail: " . $anjing1 . "\n"; 
+    
+    // 5. Class Constants
+    echo "Status Default (Constant): " . Anjing::STATUS_ADOP . "\n";
+    
+    // 7. Final Keyword (final function)
+    echo $anjing1->tampilkanEnergi() . "\n";
+    
+    // 12. Static Properties & Methods (self:: vs static:: - Late Static Binding)
+    echo "Kategori Hewan (Static::class): " . Anjing::getKategori() . "\n";
 
-    // Try adopting already adopted animal
-    $shelter->adoptAnimal("Whiskers", "Jane Smith"); // Akan melempar exception
+    // 9. Exception Handling (try-catch)
+    // $anjingInvalid = new Anjing("Bayi", 0, "Ras A", "Rendah"); 
 
-} catch (\Exception $e) {
-    echo "Error: " . $e->getMessage() . PHP_EOL;
-}
+    // 14. Penerapan CRUD
+    $manajemen->buat(['nama' => $anjing2->nama, 'ras' => $anjing2->ras, 'energi' => $anjing2->tampilkanEnergi()]);
+    $dataAdopsi = $manajemen->baca(1);
+    echo "Data Adopsi ID 1: " . ($dataAdopsi ? $dataAdopsi['nama'] : 'Tidak ada') . "\n";
+    $manajemen->perbarui(1, ['status_adopsi' => 'Diadopsi']);
+    echo "Status Baru ID 1: " . $manajemen->baca(1)['status_adopsi'] . "\n";
+    $manajemen->hapus(1);
 
-// 14. MVC dan CRUD - Sederhana (hanya konsep, tidak full implementation)
-// Model
-class AdoptionModel {
-    private $data = [];
+    // 19. Cloning Object & Magic Methods __clone()
+    $anjing3 = clone $anjing1; // Duplikasi objek
+    $anjing3->nama = "Duplikat Bolt"; // Modifikasi salinan
+    echo "Anjing 3 Nama: " . $anjing3->nama . "\n";
 
-    public function create($animal) {
-        $this->data[$animal->getName()] = $animal;
-    }
-
-    public function read($name) {
-        return $this->data[$name] ?? null;
-    }
-
-    public function update($name, $adopterName) {
-        if (isset($this->data[$name]) && method_exists($this->data[$name], 'adopt')) {
-            $this->data[$name]->adopt($adopterName);
+    // 16. Object Iteration: Menggunakan `foreach` untuk mengiterasi properti publik
+    echo "--- Iterasi Properti Publik Anjing 2 ---\n";
+    foreach ($anjing2 as $key => $value) {
+        if (is_string($value)) {
+            echo "{$key}: {$value}\n";
         }
     }
+    echo "----------------------------------------\n";
 
-    public function delete($name) {
-        unset($this->data[$name]);
-    }
+    // 15. Object Serialization: serialize(), unserialize()
+    $serializedAnjing = serialize($anjing2);
+    echo "Objek Anjing 2 diserialisasi.\n";
+    
+    $unserializedAnjing = unserialize($serializedAnjing);
+    echo "Objek Anjing 2 diunserialisasi: " . $unserializedAnjing->nama . "\n";
+
+    // 20. Anonymous Class (PHP 7+)
+    $emailSender = new class implements \AdopsiHewan\Interfaces\CrudInterface {
+        public function buat(array $data): void { echo "AC: Mengirim email konfirmasi...\n"; }
+        public function baca(int $id): ?array { return null; }
+        public function perbarui(int $id, array $data): bool { return false; }
+        public function hapus(int $id): bool { return false; }
+    };
+
+    $emailSender->buat(['penerima' => 'adopter@example.com']);
+    
+} catch (\InvalidArgumentException $e) {
+    echo "ERROR: " . $e->getMessage() . "\n";
 }
-
-// Controller
-class AdoptionController {
-    private $model;
-
-    public function __construct($model) {
-        $this->model = $model;
-    }
-
-    public function adopt($name, $adopterName) {
-        $this->model->update($name, $adopterName);
-    }
-
-    public function show($name) {
-        $animal = $this->model->read($name);
-        if ($animal) {
-            echo $animal . PHP_EOL;
-        } else {
-            echo "Animal not found." . PHP_EOL;
-        }
-    }
-}
-
-// 15. Object Serialization
-$serializedDog = serialize($dog);
-$unserializedDog = unserialize($serializedDog);
-
-echo "Serialized Dog: $serializedDog\n";
-
-// 17. Reflection
-$reflector = new \ReflectionClass($dog);
-echo "Methods in Dog class: " . implode(", ", array_map(fn($m) => $m->name, $reflector->getMethods())) . PHP_EOL;
-
-// 18. Dependency Injection sederhana
-class Logger {
-    public function log($message) {
-        echo "LOG: $message\n";
-    }
-}
-
-class AdoptionService {
-    private $logger;
-    public function __construct(Logger $logger) {
-        $this->logger = $logger;
-    }
-
-    public function processAdoption($animalName) {
-        $this->logger->log("Processing adoption for $animalName");
-    }
-}
-
-$logger = new Logger();
-$service = new AdoptionService($logger);
-$service->processAdoption("Buddy");
-
-// 19. Cloning object
-$catClone = clone $cat;
-echo "Cloned cat: $catClone\n";
-
+// 3. Magic Methods: __destruct() akan dipanggil saat skrip selesai.
 ?>
-
