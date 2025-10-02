@@ -1,12 +1,16 @@
+/* File: petstyle.css */
+
+/* 1. Impor Font dari Google Fonts */
 @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 
+/* --- Gaya Dasar & Latar Belakang --- */
 body {
   background-color: #f7e8f6;
   color: #c383ce;
   font-family: "Press Start 2P", cursive;
   margin: 20px;
-  line-height: 1.8; /* Garis yang lebih jarang agar lebih mudah dibaca */
-  font-size: 10px; /* Font Press Start 2P perlu dikecilkan agar terlihat bagus */
+  line-height: 1.8;
+  font-size: 10px; /* Font Press Start 2P perlu dikecilkan */
 }
 
 .container {
@@ -15,67 +19,90 @@ body {
   padding: 20px;
   background-color: #ffffff;
   border-radius: 5px;
-  box-shadow: 0 4px 0 #c383ce; /* Efek shadow bergaya retro/pixel */
+  box-shadow: 0 4px 0 #b550b5;
   border: 3px solid #c383ce;
+  margin-bottom: 50px;
 }
 
-.header {
-  max-width: fit-content;
-  margin: auto;
-  color: #f1c6e7;
-}
-
+/* --- Gaya Header & Paragraf --- */
 h1 {
-  color: #c383ce;
+  color: #e63e6d;
   text-align: center;
-  border-bottom: 3px solid #c383ce;
-  padding-bottom: 10px;
-  font-size: 12px;
-  font-family: "Press Start 2P";
+  font-size: 14px;
+  margin-bottom: 5px;
 }
 
-h2 {
+p {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 9px;
   color: #b550b5;
   border-bottom: 2px solid #c383ce;
+  padding-bottom: 15px;
+}
+
+/* Sub-Header untuk Setiap Bagian (1. Detail Hewan, 2. Constants, dsb.) */
+h2 {
+  color: #b550b5;
+  border-bottom: 2px dashed #c383ce;
   padding-bottom: 5px;
   margin-top: 30px;
+  margin-bottom: 10px;
   font-size: 10px;
 }
 
-.log-entry {
-  background-color: #e2e2e2;
-  padding: 8px;
-  border-radius: 3px;
-  margin-bottom: 5px;
-  font-size: 9px;
-  color: #7a7a7a;
-  white-space: pre-wrap;
-  border: 1px dashed #c383ce;
-}
-
+/* --- Gaya Kontainer Hasil (Per Fungsi) --- */
 .result-block {
   border: 2px solid #c383ce;
   padding: 15px;
   margin-bottom: 15px;
   border-radius: 5px;
+  /* Teks biasa agar lebih mudah dibaca daripada Press Start 2P */
+  font-family: monospace;
+  font-size: 12px;
+  line-height: 1.4;
 }
 
+/* Styling untuk label data di dalam result-block */
 .result-block strong {
-  color: #e63e6d; /* Warna highlight (merah muda/fuschia) */
-  font-weight: normal;
+  color: #e63e6d; /* Warna highlight (merah muda) */
+  font-weight: bold;
 }
 
-pre {
+/* Gaya khusus untuk blok log/refleksi */
+.log-block {
+  border-color: #6c757d;
   background-color: #f1f1f1;
+}
+
+/* Gaya untuk setiap baris log */
+.log-entry {
+  background-color: #e9ecef;
+  padding: 5px;
+  border-radius: 3px;
+  margin-bottom: 3px;
+  font-size: 10px;
+  color: #495057; /* Warna gelap agar kontras */
+  white-space: pre-wrap;
+  border-left: 3px solid #6c757d;
+}
+
+/* Gaya untuk output __toString() atau Iteration */
+pre {
+  background-color: #3d3d3d;
+  color: #00ff00;
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 3px;
   overflow-x: auto;
   font-size: 8px;
   border: 1px solid #c383ce;
 }
 
-hr {
-  border: 0;
-  border-top: 1px solid #ced4da;
-  margin: 20px 0;
+/* Gaya khusus untuk blok error */
+.error-block {
+  border-color: #ff0000;
+  background-color: #ffe0e0;
+  color: #ff0000;
+  font-weight: bold;
 }
