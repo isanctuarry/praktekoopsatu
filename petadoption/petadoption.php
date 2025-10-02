@@ -1,5 +1,5 @@
 <?php
-// --- AUTOLOADER DAN USE STATEMENT ---
+// --- AUTOLOADER DAN USE STATEMENT (Harus di bagian atas file) ---
 spl_autoload_register(function ($class) {
     
     $base_dir = __DIR__ . '/src/';
@@ -20,7 +20,7 @@ use AdopsiHewan\Controllers\ManajemenAdopsi;
 use AdopsiHewan\Utilities\Reflektor;
 use AdopsiHewan\Interfaces\CrudInterface;
 
-// TANGKAP SEMUA OUTPUT DENGAN BUFFERING (ob_start() harus dipanggil di awal!)
+// 1. TANGKAP SEMUA OUTPUT DENGAN BUFFERING (ob_start() harus dipanggil di awal!)
 ob_start();
 
 ?>
@@ -37,12 +37,11 @@ ob_start();
     <p>Cute pets are waiting for you!</p>
 
 <?php
+// 2. INISIALISASI (Output Log/Refleksi akan tertangkap di sini)
+$reflector = new Reflektor();
+$manajemen = new ManajemenAdopsi($reflector); 
+
 try {
-    // INISIALISASI DIPINDAHKAN KE SINI (Setelah ob_start)
-    $reflector = new Reflektor();
-    $manajemen = new ManajemenAdopsi($reflector); 
-    
-    // 3. Magic Methods: __construct()
     $anjing1 = new Anjing("Bolt", 36, "Golden Retriever", "Tinggi");
     $anjing2 = new Anjing("Lassie", 12, "Border Collie", "Sedang");
 
@@ -77,7 +76,6 @@ try {
         echo "<strong>Data Adopsi ID 1 Dibaca:</strong> " . ($dataAdopsi ? $dataAdopsi['nama'] : 'Tidak ada') . "<br>";
         $manajemen->perbarui(1, ['status_adopsi' => 'Diadopsi']);
         echo "<strong>Status Baru ID 1:</strong> " . $manajemen->baca(1)['status_adopsi'] . "<br>";
-        $manajemen->hapus(1);
         echo "Data Adopsi ID 1 Dihapus.<br>";
         ?>
     </div>
@@ -123,8 +121,8 @@ try {
     <?php
 }
 
-// --- TANGKAP DAN TAMPILKAN LOG & REFLEKSI DI BAGIAN AKHIR ---
-$log_output = ob_get_clean(); // Mengakhiri buffering dan mendapatkan output
+// 3. TANGKAP DAN TAMPILKAN LOG & REFLEKSI DI BAGIAN AKHIR
+$log_output = ob_get_clean();
 $log_entries = explode("\n", $log_output);
 ?>
 
@@ -133,7 +131,6 @@ $log_entries = explode("\n", $log_output);
     <?php
     foreach ($log_entries as $entry) {
         if (trim($entry) !== '') {
-            // Ini akan membungkus setiap baris Log/Refleksi ke dalam div terpisah
             echo "<div class='log-entry'>" . htmlspecialchars($entry) . "</div>";
         }
     }
