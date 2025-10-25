@@ -1,5 +1,5 @@
 <?php
-require_once 'Book.php';
+require_once 'bookapp/Models/Book.php';
 
 class BookController {
     public function addBook(string $title, string $author) {
