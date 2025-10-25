@@ -7,7 +7,7 @@ $latihan = [
     "praktikumlima2.php"=> "Tugas Praktikum 5 pt 2",
     "praktikum6.php" => "Tugas Praktikum 6",
     "petadoption/petadoption.php"=> "Praktikum 7: Pet Adoption",
-    "book_form.php" => "Tugas Teori PBO Desain Solid"
+    "bookapp/book_form.php" => "Tugas Teori PBO Desain Solid"
 ];
 ?>
 
